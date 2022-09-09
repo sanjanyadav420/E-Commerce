@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+        
+        .parent{
+            /* display: flex; */
+            width: 50%;
+            margin: auto;
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
+            gap: 20px;
+        }
+        .parent>div{
+            margin: auto;
+        }
+        .child1{
+            /* border: 1px solid rgb(234, 230, 230); */
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            padding: 20px;
+        }
+        .child2{
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            padding: 20px;
+        }
+        .right{
+            text-align: right;
+        }
+        .red{
+            border-top: 1px solid red;
+        }
+        .gray{
+            border-top: 1px solid gray;
+        }
+        table{
+            width: 100%;
+            margin: auto;
+        }
+        td+td{
+            text-align: right;
+        }
+        input{
+            margin-bottom: 10px;
+            margin-top: 5px;
+            padding: 3px;
+        }
+        label{
+            font-size: 15px;
+        }
+        input[type="submit"]{
+           margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="child1">
+            <h2>Enter Your Card Details</h2>
+                <form>
+                    <label>Cardholder Name</label></br>
+                    <input id="name" type="text" placeholder="Dinesh Kumar"></br>
+                    <label>Credit Card Number:</label></br>
+                    <input id="ccn" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" maxlength="19" placeholder="xxxx xxxx xxxx xxxx"></br>
+                    <label>Expiration Date</label></br>
+                    <input id="month" type="month"></br>
+                    <label>CVV</label></br>
+                    <input id="cvv" type="password" placeholder="XXX" size="1" minlength="3" maxlength="3">
+                    <input id="submit" type="submit">
+                </form>
+            
+        </div>
+        <div class="child2">
+            <h2>Order information</h2>
+            <hr class="gray">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Shopping Cart</td>
+                        <td class="total">0</td>
+                    </tr>
+                    <tr>
+                        <td>Shipping</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>tax</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr class="gray">
+            <hr class="red">
+            <h2 class="right">Total &nbsp;&nbsp; ₹<span class="total"> 0</span></h2>
+
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    let total=localStorage.getItem("total")
+    let ttl=document.querySelectorAll(".total")
+    for(let i=0; i<ttl.length; i++){
+        ttl[i].innerHTML=total
+    }
+   
+
+   document.querySelector("form").addEventListener("submit",submitform)
+    let cardn="1234567891234"
+    let mnth="2025-06"
+    let cvv="123"
+   function submitform(){
+    event.preventDefault()
+    let crdinp=document.querySelector("#ccn").value
+    let mnthinp=document.querySelector("#month").value
+    let cvvinp=document.querySelector("#cvv").value
+    if(crdinp==cardn&&mnthinp==mnth&&cvvinp==cvv){
+        location.replace("otp.html")
+    }else{
+        alert("Wrong Credentials")
+    }
+    
+    
+   }
+</script>

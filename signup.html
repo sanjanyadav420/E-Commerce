@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <style>
+        .parent{
+            text-align: center; 
+            margin-top: 20px;        
+        }
+        .child{
+            padding: 20px;
+            padding-bottom: 30px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            width: 30%;
+            margin: auto;
+            border-radius: 10px;
+        }
+        input{
+            margin: 10px;
+            width: 90%;
+            height: 40px;
+            border-radius: 6px;
+            border: 1px solid gray;
+            color: gray;
+        }
+        #submit{
+            border: none;
+            background-color: rgb(214, 214, 214);
+        }
+
+    </style>
+    <style>
+        /* for navbar */
+         #navbar {
+        background-color: #1c2938;
+        border-radius: 15px;
+        padding: 5px 20px;
+        display: grid;
+        grid-template-columns: 70% 30%;
+      }
+      .nav2{
+        display: flex;
+        justify-content: space-around;
+      }
+      .nav1 > p {
+        color: #d7d7d7;
+      }
+      .nav2 > p > a{
+        text-decoration: none;
+        color: #d7d7d7;
+      }
+    </style>
+</head>
+<body>
+    <nav>
+        <div id="navbar">
+            <div class="nav1">
+                <p>Rebook</p>
+            </div>
+            <div class="nav2">
+                <p>
+                   <a href="mens.html">Mens</a> 
+                </p>
+                <p>
+                   <a href="womens.html">Womens</a> 
+                </p>
+                <p>
+                   <a href="login.html">Login</a> 
+                </p>
+                 <p>
+                   <a href="signup.html">Signup</a> 
+                </p>
+                <p>
+                  <a href="cart.html">Your Cart</a> 
+               </p>
+            </div>
+        </div>
+    </nav> 
+    <div class="parent">
+        <div class="child">
+            <h1>Sign up</h1>
+            <form>
+                <label for="">Full name</label><br/>
+                <input id="name" type="text" placeholder="Enter Your Full Name" /><br />
+
+                <label for="">Email</label><br/>
+                <input id="email" type="email" placeholder="Enter email" /><br />
+
+                <label for="">Password</label><br/>
+                <input id="password" type="password" placeholder="Enter password" /><br />
+
+                <p>By signing up, I accept the Terms of Service and acknowledge the Privacy Policy.</p>
+
+                <input id="submit" type="submit">
+
+                <div>Already have an account? <a href="login.html">Sign in</a></div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    document.querySelector("form").addEventListener("submit",myfcn)
+    let signin=JSON.parse(localStorage.getItem("id_pswd"))||[]
+
+    function myfcn(){
+        event.preventDefault()
+        let obj={
+            name:document.querySelector("#name").value,
+            email:document.querySelector("#email").value,
+            pswd:document.querySelector("#password").value
+        }
+        signin.push(obj)
+        localStorage.setItem("id_pswd",JSON.stringify(signin))
+        alert("signup successfull")
+        location.replace("login.html")
+    }
+</script>

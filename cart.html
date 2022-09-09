@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+         img{
+           max-width: 70px; 
+         }
+
+         h1{
+          text-align: center;
+         }
+         .maindiv{
+          display: flex;
+         }
+         .main1{
+          width: 55%;
+          /* border: 1px solid red; */
+          margin: auto;
+         }
+         .main2{
+          width: 40%;
+          /* border: 1px solid red; */
+          margin: auto;
+          text-align: center;
+         }
+
+         table, th, td {
+          border: 1px solid rgb(163, 162, 162);
+        }
+         table {
+          width: 100%;
+          border-collapse: collapse;
+         }
+         th {
+          height: 70px;
+          background-color: aliceblue;
+         }
+         .totaltable>tr>td:nth-child(1){
+          text-align: left;
+          padding: 10px 30px;
+         }
+         .totaltable>tr>td:nth-child(2){
+          text-align: right;
+          padding: 10px 30px;
+         }
+         #promo>form{
+          display: grid;
+          text-align: center;
+          justify-content: right;
+         }
+         .cartProductList{
+          text-align: center;
+         }
+         .removeButton{
+          background-color: red;
+          color: white;
+         }
+         .removeButton:hover{
+          cursor: pointer;
+          background-color:rgb(248, 191, 191);
+          color: red;
+          font-weight: bold;
+        }
+        .totaltable>tr>td:nth-child(1){
+          border-right: 1px solid transparent;
+          font-weight: bold;
+        }
+        .chkout{
+          margin-top: 20px;
+          padding: 10px 40px;
+          font-weight: bold;
+          color: white;
+          background-color: green;
+          border-radius: 10px;
+          border: 1px solid gray;
+        }
+        .chkout:hover{
+          cursor: pointer;
+          background-color: rgb(165, 247, 165);
+          color: green;
+        }
+
+        /* for navbar */
+        nav{
+        position: sticky;
+        top: 0px;
+      }
+
+        #navbar {
+        background-color: #1c2938;
+        border-radius: 15px;
+        padding: 5px 20px;
+        display: grid;
+        grid-template-columns: 70% 30%;
+      }
+      .nav2{
+        display: flex;
+        justify-content: space-around;
+      }
+      .nav1 > p {
+        color: #d7d7d7;
+      }
+      .nav2 > p > a{
+        text-decoration: none;
+        color: #d7d7d7;
+      }
+       </style>
+</head>
+<body>
+  <nav>
+    <div id="navbar">
+        <div class="nav1">
+            <p>Rebook</p>
+        </div>
+        <div class="nav2">
+            <p>
+               <a href="mens.html">Mens</a> 
+            </p>
+            <p>
+               <a href="womens.html">Womens</a> 
+            </p>
+            <!-- <p>
+               <a href="login.html">Login</a> 
+            </p>
+             <p>
+               <a href="signup.html">Signup</a> 
+            </p> -->
+            <p>
+              <a href="cart.html">Your Cart</a> 
+           </p>
+           <p>
+            <a class="logout">Log out</a>
+           </p>
+        </div>
+    </div>
+</nav> 
+    <h1>Your Cart</h1>
+   <div class="maindiv">
+    <div class="main1">
+      <h1>Shopping cart</h1>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Sub Total</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody class="cartProductList">
+
+        </tbody>
+      </table>
+    </div>
+    <div class="main2">
+      <h1>Cart total</h1>
+      <table>
+        <tbody class="totaltable">
+          <tr>
+            <td>Sub total</td>
+            <td class="sbttl">0</td>
+          </tr>
+          <tr>
+            <td>Discount</td>
+            <td>
+              <div id="promo">
+              <form action="">
+                <label for="">have a promo code?</label></br>
+                <input type="text" placeholder="type your promocode here" class="pcode"></br>
+                <input type="submit">
+              </form>
+            </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td class="gtotal">0</td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="chkout">PROCEED TO CHECKOUT</button>
+    </div>
+   </div>
+    
+</body>
+</html>
+<script>
+
+    let data=JSON.parse(localStorage.getItem("cart"))||[]
+    let loginData=JSON.parse(localStorage.getItem("loginAs"))
+
+    displayCart(data)
+    subtotal()
+    gtotal()
+    checklogin(loginData)
+
+    document.querySelector("form").addEventListener("submit",promoCode)
+    
+    
+    //functions
+
+    //function for subtotal
+      function subtotal(){
+        let subtotal=document.getElementsByClassName("subTotal")
+          let sum=0
+          for(let i=0; i<subtotal.length; i++){
+            sum+=+(subtotal[i].innerText)
+          }
+          document.querySelector(".sbttl").innerText=sum
+          gtotal()
+      }
+
+
+      //function for gtotal
+      function gtotal(){
+        let total=document.querySelector(".sbttl").innerText
+        document.querySelector(".gtotal").innerText=total
+      }
+
+
+    //function for delete data from cart
+    function deletedata(index){
+      data.splice(index,1);
+          localStorage.setItem("cart",JSON.stringify(data))
+          window.location.reload()
+    }
+
+    
+    //function for promocode
+    function promoCode(){
+      event.preventDefault()
+      let pcode=document.querySelector(".pcode").value
+      if(pcode=="masai30"){
+        let total=+document.querySelector(".gtotal").innerText
+        let subtotal=+document.querySelector(".sbttl").innerText
+        if(total==subtotal){
+        let dis=(total*70)/100
+        document.querySelector(".gtotal").innerText=dis
+        }else{
+          alert("Promo code is already applied")
+        }
+      }else{
+        gtotal()
+        alert("Promo code is not valid")
+      }
+    }
+
+            //check for login
+    function checklogin(loginData){
+        if(loginData==null){
+          alert("Please login")
+          location.replace("login.html")
+        }
+        else if(loginData.length>=1){
+          return;
+        }
+      }
+
+      
+
+   //logout
+   document.querySelector(".logout").addEventListener("click",function(){
+    localStorage.removeItem("loginAs");
+    alert("logout successfull")
+    location.replace("login.html")
+   })
+
+   //function for proceed to checkout
+   document.querySelector(".chkout").addEventListener("click",function(){
+    let total=document.querySelector(".gtotal").innerText
+    if(data.length==0){
+      alert("Your cart is empty")
+    }else{
+     localStorage.setItem("total",(total))
+     window.location.href="checkout.html"
+    }
+    
+   })
+
+    
+    //function for display cart
+    function displayCart(data){
+      data.forEach(function(el,index){
+        let tr=document.createElement("tr")
+
+        let td1=document.createElement("td")
+        let imag=document.createElement("img")
+        imag.setAttribute("src",el.image_url)
+        imag.setAttribute("class","image")
+        td1.append(imag)
+
+        let td2=document.createElement("td")
+        td2.innerText=el.name;
+       
+        let td3=document.createElement("td")
+        td3.innerText=el.price
+       
+        let td4=document.createElement("td")
+        let slct=document.createElement("select")
+        slct.setAttribute("class","select")
+        let opt1=document.createElement("option")
+        opt1.setAttribute("value","1")
+        opt1.innerText=1
+        let opt2=document.createElement("option")
+        opt2.setAttribute("value","2")
+        opt2.innerText=2    
+        let opt3=document.createElement("option")
+        opt3.setAttribute("value","3")
+        opt3.innerText=3 
+        let opt4=document.createElement("option")
+        opt4.setAttribute("value","4")
+        opt4.innerText=4    
+        let opt5=document.createElement("option")
+        opt5.setAttribute("value","5")
+        opt5.innerText=5  
+        let opt6=document.createElement("option")
+        opt6.setAttribute("value","6")
+        opt6.innerText=6   
+        let opt7=document.createElement("option")
+        opt7.setAttribute("value","7")
+        opt7.innerText=7   
+        let opt8=document.createElement("option")
+        opt8.setAttribute("value","8")
+        opt8.innerText=8  
+        let opt9=document.createElement("option")
+        opt9.setAttribute("value","9")
+        opt9.innerText=9
+        slct.addEventListener("change",function(){
+           subTotalFun()
+           subtotal()
+        })
+        slct.append(opt1,opt2,opt3,opt4,opt5,opt6,opt7,opt8,opt9)
+        td4.append(slct)
+        
+        let td5=document.createElement("td")
+        td5.setAttribute("class","subTotal")
+        let tot=el.price
+        function subTotalFun(){
+          td5.innerText=tot*slct.value
+        }
+        td5.innerText=tot
+        
+        let td6=document.createElement("td")
+        td6.setAttribute("class","removeButton")
+        td6.innerText="remove"
+        td6.addEventListener("click",function(){
+          deletedata(index)
+        })
+
+        tr.append(td1,td2,td3,td4,td5,td6)
+        document.querySelector(".cartProductList").append(tr)
+      })
+    }
+
+
+</script>

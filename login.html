@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <style>
+        .parent{
+            text-align: center;    
+            margin-top: 20px;       
+        }
+        .child{
+            padding: 20px;
+            padding-bottom: 30px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            width: 30%;
+            margin: auto;
+            border-radius: 10px;
+        }
+        input{
+            margin: 10px;
+            width: 90%;
+            height: 40px;
+            border-radius: 6px;
+            border: 1px solid gray;
+            color: gray;
+        }
+        #submit{
+            border: none;
+            background-color: rgb(214, 214, 214);
+        }
+        
+    </style>
+    <style>
+        /* for navbar */
+         #navbar {
+        background-color: #1c2938;
+        border-radius: 15px;
+        padding: 5px 20px;
+        display: grid;
+        grid-template-columns: 70% 30%;
+      }
+      .nav2{
+        display: flex;
+        justify-content: space-around;
+      }
+      .nav1 > p {
+        color: #d7d7d7;
+      }
+      .nav2 > p > a{
+        text-decoration: none;
+        color: #d7d7d7;
+      }
+    </style>
+</head>
+<body>
+    <nav>
+        <div id="navbar">
+            <div class="nav1">
+                <p>Rebook</p>
+            </div>
+            <div class="nav2">
+                <p>
+                   <a href="mens.html">Mens</a> 
+                </p>
+                <p>
+                   <a href="womens.html">Womens</a> 
+                </p>
+                <p>
+                   <a href="login.html">Login</a> 
+                </p>
+                 <p>
+                   <a href="signup.html">Signup</a> 
+                </p>
+                <p>
+                  <a href="cart.html">Your Cart</a> 
+               </p>
+            </div>
+        </div>
+    </nav> 
+    <div class="parent">
+        <div class="child">
+            <h1>Log in</h1>
+            <form>
+                <label for="">Email</label><br/>
+                <input id="email" type="email" placeholder="Enter email" /><br />
+
+                <label for="">Password</label><br/>
+                <input id="password" type="password" placeholder="Enter password" /><br />
+
+                <input id="submit" type="submit">
+
+                <div>Don't have an account? <a href="signup.html">Sign up</a></div>
+            </form>
+
+        </div>
+    </div>
+    
+</body>
+</html>
+<script>
+    
+    
+    document.querySelector("form").addEventListener("submit",myfcn)
+
+    function myfcn(){
+        event.preventDefault()
+        let data=JSON.parse(localStorage.getItem("id_pswd"))
+       var uemail = document.querySelector("#email").value 
+       var upass = document.querySelector("#password").value 
+       let is=false;
+       let a
+       for(var i =0;i<data.length;i++){
+        if(uemail==data[i].email && upass==data[i].pswd){
+           is=true;
+           a=i
+       }
+       }
+       if(is){
+        alert("login successfull")
+           location.replace("mens.html")
+           localStorage.setItem("loginAs",JSON.stringify(data[a].name))
+       }
+       else{
+        alert('wrong details')
+       } 
+       
+    }
+   
+
+</script>
